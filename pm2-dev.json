@@ -1,0 +1,274 @@
+{
+    "apps": [
+        {
+            "exec_mode": "fork",
+            "instances": 1,
+            "script": "index.js",
+            "name": "eulashop",
+            "interpreter": "node",
+            "watch": [
+                "src",
+                "conf",
+                "models"
+            ],
+            "env": {
+                "server": {
+                    "cert": "./cert/server.crt",
+                    "key": "./cert/server.key",
+                    "use_https": false,
+                    "app_port": "3000",
+                    "app_host": "0.0.0.0",
+                    "health_check_url": [
+                        "/healthcheck"
+                    ]
+                },
+                "service": {
+                    "node_be": {
+                        "default": {
+                            "conn_type": "http",
+                            "ip": "0.0.0.0",
+                            "port": "3000",
+                            "path": "/",
+                            "max_retry": 0,
+                            "timeout": 50,
+                            "retry_condition": "TIMEOUT|CONNECTION_ERROR"
+                        },
+                        "example": {
+                            "path": "/example2"
+                        },
+                        "examplePassingSubUrl": {
+                            "path": "/example2/:subUrlFoo1/:subUrlFoo2"
+                        }
+                    },
+                   
+                  
+                    "mongo": {
+                        "default": {
+                            "conn_type": "mongodb",
+                            "ip": "127.0.0.1",
+                            "port": "27017",
+                            "db": "dbname",
+                            "auth": {
+                                "user": "$user",
+                                "pwd": "$pwd"
+                            },
+                            "max_retry": 0,
+                            "timeout": 4,
+                            "retry_condition": "CONNECTION_ERROR",
+                            "connection_string": {
+                                "reconnectInterval": 10000,
+                                "connectTimeoutMS": 10000
+                            }
+                        }
+                    },
+                    "redis": {
+                        "default": {
+                            "conn_type": "redis",
+                            "host": "127.0.0.1",
+                            "port": "6379",
+                            "max_retry": 0,
+                            "timeout": 5,
+                            "retry_condition": "CONNECTION_ERROR"
+                        }
+                    },
+                    "facerecognition": {
+                        "default": {
+                            "conn_type": "http",
+                            "ip": "10.138.36.58",
+                            "port": "8080",
+                            "path": "/api/v1/facerecog/base64/base64",
+                            "max_retry": 0,
+                            "timeout": 15,
+                            "retry_condition": "TIMEOUT|CONNECTION_ERROR"
+                        },
+                        "facerecog": {
+                            "path": "/api/v1/facerecog/base64/base64"
+                        }
+                    },
+                    "cron_job": {
+                        "default": {
+                            "conn_type": "http",
+                            "ip": "206.189.41.105",
+                            "port": "3514",
+                            "path": "/cronjob/v1/cron-jobs",
+                            "max_retry": 0,
+                            "timeout": 15,
+                            "retry_condition": "TIMEOUT|CONNECTION_ERROR"
+                        }
+                    },
+                    "deleteTx": {
+                        "default": {
+                            "conn_type": "http",
+                            "ip": "206.189.41.105",
+                            "port": "3014",
+                            "path": "/myIDS/v1/partner/delete-tx",
+                            "max_retry": 0,
+                            "timeout": 15,
+                            "retry_condition": "TIMEOUT|CONNECTION_ERROR"
+                        }
+                    },
+                    "SMSGW": {
+                        "default": {
+                            "conn_type": "http",
+                            "ip": "10.104.244.203",
+                            "port": "9084",
+                            "path": "/",
+                            "max_retry": 0,
+                            "timeout": 15,
+                            "retry_condition": "TIMEOUT|CONNECTION_ERROR"
+                        }
+                    },
+                    "mnid": {
+                        "default": {
+                            "conn_type": "http",
+                            "ip": "10.138.46.86",
+                            "port": "8080",
+                            "path": "/mnid/v1",
+                            "max_retry": 0,
+                            "timeout": 50,
+                            "retry_condition": "TIMEOUT|CONNECTION_ERROR"
+                        },
+                        "retrieving_mobileid_request_log": {
+                            "path": "/retrieving-mobileid-request-log"
+                        },
+                        "retrieve_mobileid_issuer": {
+                            "path": "/retrieve-mobileid-issuer"
+                        },
+                        "enrollment": {
+                            "path": "/enrollment"
+                        },
+                        "update_mobileid": {
+                            "path": "/update-mobileid"
+                        },
+                        "record_consent_log": {
+                            "path": "/record-consent-log"
+                        },
+                        "retrieving_mobileid": {
+                            "path": "/retrieving-mobileid"
+                        },
+                        "recording_varification_result": {
+                            "path": "/recording-verification-result"
+                        },
+                        "customer": {
+                            "path": "/customer"
+                        },
+                        "extra_customer": {
+                            "path": "/extra-customer"
+                        }
+                    },
+                    "get_authcode": {
+                        "default": {
+                            "conn_type": "https",
+                            "ip": "10.137.30.22",
+                            "port": "443",
+                            "path": "/auth/v3.2/oauth/authorize",
+                            "max_retry": 0,
+                            "timeout": 50,
+                            "retry_condition": "TIMEOUT|CONNECTION_ERROR"
+                        }
+                    },
+                    "consent_center_host_url": {
+                        "default": {
+                            "conn_type": "https",
+                            "ip": "cim",
+                            "port": "",
+                            "path": "/v1/privacy.json",
+                            "max_retry": 0,
+                            "timeout": 50,
+                            "retry_condition": "TIMEOUT|CONNECTION_ERROR"
+                        }
+                    }
+                },
+                "app": {
+                    "appConfig": {
+                        "isPostgresSsl" : true,
+                        "refreshDB" : true,
+                        "isMock": true,
+                        "isMockFace": true,
+                        "isMockGetAuthCode": true,
+                        "isMockConsentCenter": true,
+                        "isMockSit": true,
+                        "doCronjob" : false,
+                        "doSms" : false,
+                        "doConsent" : true,
+                        "cronjobTimeout" : "10000",
+                        "cronjobExtendMinutes" : 30,
+                        "otpLimit": 3,
+                        "pinLimit": 3,
+                        "faceLimit": 3,
+                        "faceRecogScoreTreshold": 50,
+                        "aisIssuer": "AIS",
+                        "prefixNumber": 0,
+                        "prefixThaiNumber": 66,
+                        "verifyAccountStatusActive": "active",
+                        "verifyAccountStatusInactive": "inactive",
+                        "accountStatusWaitOnChain" : "wait_on_chain",
+                        "openId" : "openId",
+                        "exCustomerScope" : "id_card_info",
+                        "verificationResultY" : "Y",
+                        "verificationResultN" : "N",
+                        "smsSenderName" : "myids",
+                        "smsMessageTh" : "คุณได้สมัครบริการ myID สำเร็จแล้ว กรุณาคลิ๊กเพื่อตั้งค่า PIN myID https://test-myais.myais.ais.co.th/openAppToApp?URI=myais%3A%2F%2FSetPIN_myID",
+                        "smsMessageEn" : "Your myID service registration has been succeeded. To set myID PIN, please click https://test-myais.myais.ais.co.th/openAppToApp?URI=myais%3A%2F%2FSetPIN_myID .",
+                        "smsCtype"  : "UTF-8",
+                        "smsServiceNumber" : "91500000001",
+                        "consentcenterBody" : {
+                            "channel" : "myids",
+                            "username" : "username",
+                            "brandId" : "brandId",
+                            "publicType" : "msisdn",
+                            "conditionName" : "myIDEnrollment-MNID",
+                            "conditionType" : "TC",
+                            "conditionURL" : "/export/home/MNT_NFS/MYID/NewRegis/econsent=eConsent.jpg",
+                            "conditionVersion" : "1.0",
+                            "conditionPermission": [
+                                {
+                                "consentPermissionName": "" ,
+                                "consentPermissionValue": "",
+                                "cmd": ""
+                                }
+                            ]
+                        },
+                        "getConsentMessage" : "บริษัท แอดวานซ์ ไวร์เลส เน็ทเวอร์ค จำกัด ในฐานะผู้ให้บริการพิสูจน์และยืนยันตัวตน (identity provider) ได้รับแจ้งจาก(ระบุชื่อ RP)ขอให้ตรวจสอบข้อมูลการพิสูจน์และยืนยันตัวตนของท่านที่ได้ให้ไว้กับบริษัทในการใช้โมบายล์ไอดีในการทำธุรกรรมออนไลน์กับ(ระบุชื่อ RP)ข้าพเจ้ารับทราบและยอมรับว่าประสงค์จะใช้โมบายล์ไอดีในการทำธุรกรรมมออนไลน์กับ(ระบุชื่อ RP)โดยยินยอมให้บริษัทเปิดเผย ประมวลผลและส่งข้อมูลส่วนบุคคลตาม Term & Condition ของบริการ Mobile ID ให้กับ(ระบุชื่อ RP)เพื่อ (ระบุชื่อ RP)ดำเนินการพิสูจน์และยืนยันตัวของข้าพเจ้าในการเข้าทำธุรกรรมมออนไลน์กับ(ระบุชื่อ RP)ต่อไปได้ทุกประการ"
+                    }
+                },
+                "commonRod": {
+                    "body_parser_limit": "1mb"
+                },
+                "commonLog": {
+                    "projectName": "myIds",
+                    "log": {
+                        "time": 15,
+                        "path": "./logs/appLog/",
+                        "level": "debug",
+                        "console": false,
+                        "file": true
+                    },
+                    "summary": {
+                        "time": 15,
+                        "path": "./logs/summary/",
+                        "console": false,
+                        "file": true,
+                        "format": "json"
+                    },
+                    "detail": {
+                        "time": 15,
+                        "path": "./logs/detail/",
+                        "console": false,
+                        "file": true,
+                        "rawData": true
+                    },
+                    "stat": {
+                        "time": 15,
+                        "path": "./logs/statPath/",
+                        "console": true,
+                        "file": true,
+                        "mode": 1,
+                        "statInterval": 15,
+                        "flush": true
+                    }
+                }
+            }
+        }
+    ]
+}
