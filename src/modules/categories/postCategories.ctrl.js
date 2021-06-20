@@ -1,8 +1,8 @@
 const status = require('../../utils/enum/status');
-const Products = require('../../models/products');
+const Categories = require('../../models/categories');
 const validateBody = require('../../service/validate');
 
-exports.postProduct = async (req, res, next) => {
+exports.postCategory = async (req, res, next) => {
     let resMessage = {
         resultCode: status.SUCCESS.RESULT_CODE,
         developerMessage: status.SUCCESS.DEVELOPER_MESSAGE,
@@ -10,7 +10,8 @@ exports.postProduct = async (req, res, next) => {
     try {
         const body = req.body;
         const param = req.params;
-        const validate = validateBody.productsSchema(body, 'POST');
+        const validate = validateBody.categoriesSchema(body, 'POST');
+
         if (validate) {
             resMessage = {
                 resultCode: status.MISSING_OR_INVALID_PARAMETER.RESULT_CODE,
@@ -18,17 +19,14 @@ exports.postProduct = async (req, res, next) => {
             };
             return res.status(400).send(resMessage);
         }
-        const product = await Products.create({
+        const category = await Categories.create({
             title: body.title,
             description: body.description,
-            imageUrl: body.imageUrl,
-            category: body.category,
-            rating: body.rating,
         });
         resMessage = {
             resultCode: status.CREATED.RESULT_CODE,
             developerMessage: status.CREATED.DEVELOPER_MESSAGE,
-            resultData: product,
+            resultData: category,
         };
         return res.status(201).send(resMessage);
     } catch (error) {

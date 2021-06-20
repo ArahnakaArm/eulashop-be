@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const productsRoute = require('./modules/products/products.route');
+const userRoute = require('./modules/user/user.route');
+const userInfoRoute = require('./modules/userinfo/userInfo.route');
+const categoriesRoute = require('./modules/categories/categories.route');
 const app = express();
 
 mongoose
@@ -27,5 +30,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.use('/api/products', productsRoute);
+app.use('/api/auth', userRoute);
+app.use('/api/userinfo', userInfoRoute);
+app.use('/api/categories', categoriesRoute);
 
 module.exports = app;

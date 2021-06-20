@@ -15,5 +15,11 @@ exports.putProduct = async (req, res, next) => {
             resultData: product,
         };
         return res.status(200).send(resMessage);
-    } catch {}
+    } catch {
+        resMessage = {
+            resultCode: status.SYSTEM_ERROR.RESULT_CODE,
+            developerMessage: status.SYSTEM_ERROR.DEVELOPER_MESSAGE,
+        };
+        return res.status(500).send(resMessage);
+    }
 };
