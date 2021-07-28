@@ -3,6 +3,7 @@ const User = require('../../models/user');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const validateBody = require('../../service/validate');
+
 exports.signup = async (req, res) => {
     let resMessage = {
         resultCode: status.SUCCESS.RESULT_CODE,
@@ -19,6 +20,17 @@ exports.signup = async (req, res) => {
             };
             return res.status(400).send(resMessage);
         }
+
+        const user = await User.find({ email: body.email });
+
+        if (user.length > 0) {
+            resMessage = {
+                resultCode: status.CONFLICT.RESULT_CODE,
+                developerMessage: status.CONFLICT.DEVELOPER_MESSAGE,
+            };
+            return res.status(400).send(resMessage);
+        }
+
         bcrypt.genSalt(saltRounds, function (err, salt) {
             if (err) {
                 resMessage = {

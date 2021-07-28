@@ -105,7 +105,16 @@ exports.categoriesSchema = (body, method) => {
 exports.usersSchema = (body, method) => {
     let requiredSchema = [];
     if (method === 'POST' || method === 'PUT')
-        requiredSchema = [...requiredSchema, 'email', 'password', 'name', 'surname', 'address', 'telephoneNumber'];
+        requiredSchema = [
+            ...requiredSchema,
+            'email',
+            'password',
+            'name',
+            'surname',
+            'address',
+            'telephoneNumber',
+            'wallet',
+        ];
     const schema = {
         type: 'object',
         additionalProperties: false,
@@ -135,6 +144,67 @@ exports.usersSchema = (body, method) => {
                 emptyChecker: true,
                 type: 'string',
                 pattern: '^[0][0-9]{8,9}$',
+            },
+            wallet: {
+                emptyChecker: true,
+                type: 'number',
+            },
+        },
+    };
+
+    const validateBody = ajv.validate(schema, body);
+    if (validateBody) {
+        return null;
+    } else {
+        const validateError = ajv.errorsText();
+        return validateError;
+    }
+};
+
+exports.walletSchema = (body, method) => {
+    let requiredSchema = [];
+    if (method === 'POST' || method === 'PUT') requiredSchema = [...requiredSchema, 'option', 'amount'];
+    const schema = {
+        type: 'object',
+        additionalProperties: false,
+        required: requiredSchema,
+        properties: {
+            option: {
+                emptyChecker: true,
+                type: 'string',
+                pattern: '^(Add)$|^(Minus)$',
+            },
+            amount: {
+                emptyChecker: true,
+                type: 'number',
+            },
+        },
+    };
+
+    const validateBody = ajv.validate(schema, body);
+    if (validateBody) {
+        return null;
+    } else {
+        const validateError = ajv.errorsText();
+        return validateError;
+    }
+};
+
+exports.orderSchema = (body, method) => {
+    let requiredSchema = [];
+    if (method === 'POST' || method === 'PUT') requiredSchema = [...requiredSchema, 'sendType', 'product'];
+    const schema = {
+        type: 'object',
+        additionalProperties: false,
+        required: requiredSchema,
+        properties: {
+            sendType: {
+                emptyChecker: true,
+                type: 'string',
+            },
+            product: {
+                emptyChecker: true,
+                type: 'string',
             },
         },
     };

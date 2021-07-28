@@ -5,6 +5,8 @@ const productsRoute = require('./modules/products/products.route');
 const userRoute = require('./modules/user/user.route');
 const userInfoRoute = require('./modules/userinfo/userInfo.route');
 const categoriesRoute = require('./modules/categories/categories.route');
+const addWalletRoute = require('./modules/wallet/wallet.route');
+const orderRoute = require('./modules/orders/orders.route');
 const app = express();
 
 mongoose
@@ -33,5 +35,7 @@ app.use('/api/products', productsRoute);
 app.use('/api/auth', userRoute);
 app.use('/api/userinfo', userInfoRoute);
 app.use('/api/categories', categoriesRoute);
+app.use('/api/addwallet', addWalletRoute);
+app.use('/api/order', orderRoute);
 
 module.exports = app;

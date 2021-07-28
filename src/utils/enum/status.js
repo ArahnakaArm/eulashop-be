@@ -15,6 +15,11 @@ module.exports = Object.freeze({
         RESULT_CODE: '40001',
         DEVELOPER_MESSAGE: 'Bad request',
     },
+
+    NOT_ENOUGH_WALLET: {
+        RESULT_CODE: '40005',
+        DEVELOPER_MESSAGE: 'Not enough wallet to minus',
+    },
     INVALID_PERIOD_CODE: {
         RESULT_CODE: '40002',
         DEVELOPER_MESSAGE: 'Invalid period code',

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --colors test/*"
   },
   "author": "teetawat riya",
   "license": "ISC",
@@ -24,6 +24,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.11",
     "mongoose-unique-validator": "^2.0.3",
-    "prettier": "^2.3.0"
+    "prettier": "^2.3.0",
+    "mocha": "^9.0.1",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0"
   }
 }

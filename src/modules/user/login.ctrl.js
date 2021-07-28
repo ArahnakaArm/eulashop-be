@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
             };
             return res.status(401).send(resMessage);
         }
-        const token = jwt.sign({ userId: user._id }, 'RANDOM_TOKEN_SECRET', { expiresIn: '24h' });
+        const token = jwt.sign({ userId: user._id }, 'SECRET', { expiresIn: '24h' });
         res.status(200).send({
             userId: user._id,
             token: token,
